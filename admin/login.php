@@ -8,12 +8,25 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login = trim($_POST['login'] ?? '');
     $password = $_POST['password'] ?? '';
-    $stmt = $pdo->prepare('SELECT * FROM users WHERE login = ? AND is_admin = 1');
-    $stmt->execute([$login]);
-    $u = $stmt->fetch();
-    if ($u && password_verify($password, $u['password'])) {
+
+    // Учетные данные из ТЗ — работают и без сидирования БД
+    $ok = ($login === 'Admin26' && $password === 'Demo20');
+
+    // Дополнительно: любые пользователи с is_admin = 1 из БД
+    if (!$ok) {
+        $stmt = $pdo->prepare('SELECT * FROM users WHERE login = ? AND is_admin = 1');
+        $stmt->execute([$login]);
+        $u = $stmt->fetch();
+        if ($u && password_verify($password, $u['password'])) {
+            $ok = true;
+            $_SESSION['admin_login'] = $u['login'];
+        }
+    } else {
+        $_SESSION['admin_login'] = 'Admin26';
+    }
+
+    if ($ok) {
         $_SESSION['is_admin'] = true;
-        $_SESSION['admin_login'] = $u['login'];
         header('Location: /exam/admin/index.php'); exit;
     }
     $error = 'Неверный логин или пароль администратора.';

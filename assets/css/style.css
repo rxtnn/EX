@@ -247,11 +247,15 @@ h3, .h3 { font-size: 18px; font-weight: 500; }
 .btn:hover { transform: translateY(-1px); }
 
 /* ============ Таблица админки ============ */
-.admin-table { background: #fff; border-radius: 10px; overflow: hidden; }
+.admin-table { background: #fff; border-radius: 10px; overflow: hidden; margin-bottom: 0; }
 .admin-table thead { background: var(--primary-deep); color: #fff; }
-.admin-table th { font-weight: 500; cursor: pointer; user-select: none; }
-.admin-table th.sortable:hover { background: rgba(255,255,255,0.1); }
-.admin-table th .sort-arrow { opacity: 0.5; font-size: 12px; }
+.admin-table thead th { font-weight: 500; user-select: none; vertical-align: middle; }
+.admin-table th.sortable a { display: inline-block; }
+.admin-table th.sortable:hover { background: rgba(255,255,255,0.08); }
+.admin-table th .sort-arrow { font-size: 12px; opacity: 0.85; }
+.admin-table tbody tr { transition: background-color 0.15s; }
+.admin-table tbody tr:hover { background-color: #f0f7ff; }
+.admin-table .badge { font-weight: 500; }
 
 /* ============ Личный кабинет: профиль-карточка ============ */
 .profile-summary {
