@@ -315,81 +315,6 @@ include __DIR__ . '/../includes/header.php';
                                 </div>
                             </td>
                         </tr>
-
-                        <!-- Модалка деталей -->
-                        <div class="modal fade" id="detail-<?= $detailId ?>" tabindex="-1">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <div class="modal-content">
-                                    <div class="modal-header bg-primary-deep text-white">
-                                        <h5 class="modal-title"><i class="bi bi-file-earmark-text"></i> Заявка #<?= (int)$r['id'] ?></h5>
-                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <h6 class="text-muted">Пользователь</h6>
-                                        <ul class="list-unstyled small mb-3">
-                                            <li><strong>ФИО:</strong> <?= e($r['fio']) ?></li>
-                                            <li><strong>Логин:</strong> <?= e($r['login']) ?></li>
-                                            <li><strong>Дата рождения:</strong> <?= e(date('d.m.Y', strtotime($r['birthdate']))) ?></li>
-                                            <li><strong>E-mail:</strong> <?= e($r['email']) ?></li>
-                                            <li><strong>Телефон:</strong> <?= e($r['phone']) ?></li>
-                                        </ul>
-                                        <h6 class="text-muted">Заявка</h6>
-                                        <ul class="list-unstyled small mb-3">
-                                            <li><strong>Транспорт:</strong> <?= e($r['transport_type']) ?></li>
-                                            <li><strong>Дата начала:</strong> <?= e(date('d.m.Y', strtotime($r['start_date']))) ?></li>
-                                            <li><strong>Оплата:</strong> <?= e($r['payment_method']) ?></li>
-                                            <li><strong>Подана:</strong> <?= e(date('d.m.Y H:i', strtotime($r['created_at']))) ?></li>
-                                            <li><strong>Статус:</strong> <span class="badge <?= status_badge($r['status']) ?>"><?= e($r['status']) ?></span></li>
-                                        </ul>
-                                        <?php if ($r['review_id']): ?>
-                                            <h6 class="text-muted">Отзыв клиента</h6>
-                                            <div class="rating-stars mb-1">
-                                                <?php for ($i = 1; $i <= 5; $i++): ?>
-                                                    <i class="bi bi-star<?= $i <= (int)$r['rating'] ? '-fill' : '' ?>"></i>
-                                                <?php endfor; ?>
-                                            </div>
-                                            <p class="small mb-1"><?= nl2br(e($r['review_text'])) ?></p>
-                                            <small class="text-muted">Оставлен <?= e(date('d.m.Y H:i', strtotime($r['review_created']))) ?></small>
-                                        <?php endif; ?>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Модалка смены статуса -->
-                        <div class="modal fade" id="status-<?= $detailId ?>" tabindex="-1">
-                            <div class="modal-dialog modal-dialog-centered">
-                                <form method="post" class="modal-content">
-                                    <input type="hidden" name="action" value="update_status">
-                                    <input type="hidden" name="id" value="<?= (int)$r['id'] ?>">
-                                    <input type="hidden" name="redirect_to" value="<?= e($currentUrl) ?>">
-                                    <div class="modal-header bg-primary-deep text-white">
-                                        <h5 class="modal-title"><i class="bi bi-pencil-square"></i> Смена статуса #<?= (int)$r['id'] ?></h5>
-                                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
-                                    </div>
-                                    <div class="modal-body">
-                                        <p class="small text-muted mb-3">
-                                            Заявка <strong><?= e($r['fio']) ?></strong> · <?= e($r['transport_type']) ?> ·
-                                            <?= e(date('d.m.Y', strtotime($r['start_date']))) ?>
-                                        </p>
-                                        <p class="mb-2">Текущий статус: <span class="badge <?= status_badge($r['status']) ?>"><?= e($r['status']) ?></span></p>
-                                        <label class="form-label">Новый статус</label>
-                                        <select name="status" class="form-select" required>
-                                            <?php foreach (['Новая', 'Идет обучение', 'Обучение завершено'] as $s): ?>
-                                                <option <?= $r['status'] === $s ? 'selected' : '' ?>><?= e($s) ?></option>
-                                            <?php endforeach; ?>
-                                        </select>
-                                    </div>
-                                    <div class="modal-footer">
-                                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
-                                        <button class="btn btn-primary-deep"><i class="bi bi-check2"></i> Сохранить</button>
-                                    </div>
-                                </form>
-                            </div>
-                        </div>
                     <?php endforeach; endif; ?>
                 </tbody>
             </table>
@@ -400,6 +325,85 @@ include __DIR__ . '/../includes/header.php';
             </div>
         <?php endif; ?>
     </div>
+
+    <!-- Модалки (вынесены за пределы таблицы: внутри <tbody> браузер
+         "фостер-парентит" <div>/<form>, ломая submit формы смены статуса) -->
+    <?php foreach ($rows as $r): $detailId = 'app' . (int)$r['id']; ?>
+        <!-- Модалка деталей -->
+        <div class="modal fade" id="detail-<?= $detailId ?>" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header bg-primary-deep text-white">
+                        <h5 class="modal-title"><i class="bi bi-file-earmark-text"></i> Заявка #<?= (int)$r['id'] ?></h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <h6 class="text-muted">Пользователь</h6>
+                        <ul class="list-unstyled small mb-3">
+                            <li><strong>ФИО:</strong> <?= e($r['fio']) ?></li>
+                            <li><strong>Логин:</strong> <?= e($r['login']) ?></li>
+                            <li><strong>Дата рождения:</strong> <?= e(date('d.m.Y', strtotime($r['birthdate']))) ?></li>
+                            <li><strong>E-mail:</strong> <?= e($r['email']) ?></li>
+                            <li><strong>Телефон:</strong> <?= e($r['phone']) ?></li>
+                        </ul>
+                        <h6 class="text-muted">Заявка</h6>
+                        <ul class="list-unstyled small mb-3">
+                            <li><strong>Транспорт:</strong> <?= e($r['transport_type']) ?></li>
+                            <li><strong>Дата начала:</strong> <?= e(date('d.m.Y', strtotime($r['start_date']))) ?></li>
+                            <li><strong>Оплата:</strong> <?= e($r['payment_method']) ?></li>
+                            <li><strong>Подана:</strong> <?= e(date('d.m.Y H:i', strtotime($r['created_at']))) ?></li>
+                            <li><strong>Статус:</strong> <span class="badge <?= status_badge($r['status']) ?>"><?= e($r['status']) ?></span></li>
+                        </ul>
+                        <?php if ($r['review_id']): ?>
+                            <h6 class="text-muted">Отзыв клиента</h6>
+                            <div class="rating-stars mb-1">
+                                <?php for ($i = 1; $i <= 5; $i++): ?>
+                                    <i class="bi bi-star<?= $i <= (int)$r['rating'] ? '-fill' : '' ?>"></i>
+                                <?php endfor; ?>
+                            </div>
+                            <p class="small mb-1"><?= nl2br(e($r['review_text'])) ?></p>
+                            <small class="text-muted">Оставлен <?= e(date('d.m.Y H:i', strtotime($r['review_created']))) ?></small>
+                        <?php endif; ?>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="btn btn-secondary" data-bs-dismiss="modal">Закрыть</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Модалка смены статуса -->
+        <div class="modal fade" id="status-<?= $detailId ?>" tabindex="-1" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+                <form method="post" action="<?= e(url('admin/index.php')) ?>" class="modal-content">
+                    <input type="hidden" name="action" value="update_status">
+                    <input type="hidden" name="id" value="<?= (int)$r['id'] ?>">
+                    <input type="hidden" name="redirect_to" value="<?= e($currentUrl) ?>">
+                    <div class="modal-header bg-primary-deep text-white">
+                        <h5 class="modal-title"><i class="bi bi-pencil-square"></i> Смена статуса #<?= (int)$r['id'] ?></h5>
+                        <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="modal-body">
+                        <p class="small text-muted mb-3">
+                            Заявка <strong><?= e($r['fio']) ?></strong> · <?= e($r['transport_type']) ?> ·
+                            <?= e(date('d.m.Y', strtotime($r['start_date']))) ?>
+                        </p>
+                        <p class="mb-2">Текущий статус: <span class="badge <?= status_badge($r['status']) ?>"><?= e($r['status']) ?></span></p>
+                        <label class="form-label">Новый статус</label>
+                        <select name="status" class="form-select" required>
+                            <?php foreach (['Новая', 'Идет обучение', 'Обучение завершено'] as $s): ?>
+                                <option value="<?= e($s) ?>" <?= $r['status'] === $s ? 'selected' : '' ?>><?= e($s) ?></option>
+                            <?php endforeach; ?>
+                        </select>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal">Отмена</button>
+                        <button type="submit" class="btn btn-primary-deep"><i class="bi bi-check2"></i> Сохранить</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    <?php endforeach; ?>
 
     <!-- Пагинация -->
     <?php if ($pages > 1): ?>

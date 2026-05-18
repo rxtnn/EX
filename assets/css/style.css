@@ -115,7 +115,7 @@ h3, .h3 { font-size: 18px; font-weight: 500; }
 .hero-slider .slide::after {
     content: '';
     position: absolute; inset: 0;
-    background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,123,255,0.45));
+    background: rgba(0, 0, 0, 0.35);
 }
 .hero-slider .caption {
     position: absolute;
@@ -185,7 +185,7 @@ h3, .h3 { font-size: 18px; font-weight: 500; }
 .feature-icon {
     width: 56px; height: 56px;
     border-radius: 12px;
-    background: linear-gradient(135deg, var(--primary-deep), var(--turquoise));
+    background: var(--primary-deep);
     color: #fff;
     display: flex; align-items: center; justify-content: center;
     font-size: 26px;
@@ -259,7 +259,7 @@ h3, .h3 { font-size: 18px; font-weight: 500; }
 
 /* ============ Личный кабинет: профиль-карточка ============ */
 .profile-summary {
-    background: linear-gradient(135deg, var(--primary-deep), var(--turquoise));
+    background: var(--primary-deep);
     color: #fff;
     border-radius: 14px;
     padding: 24px;
