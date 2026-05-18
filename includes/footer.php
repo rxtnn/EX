@@ -4,7 +4,7 @@
         <div class="row g-4">
             <div class="col-md-3">
                 <h5 class="text-white d-flex align-items-center mb-2">
-                    <img src="/exam/assets/images/boat.png" alt="" class="brand-logo me-2" style="filter: brightness(0) invert(1);">
+                    <img src="<?= e(url('assets/images/boat.png')) ?>" alt="" class="brand-logo me-2" style="filter: brightness(0) invert(1);">
                     Водить.РФ
                 </h5>
                 <p class="small">Курсы по вождению речного транспорта: катер, круизный лайнер, яхта.</p>
@@ -27,7 +27,7 @@
                 <h6 class="text-white">Мы в соцсетях</h6>
                 <div class="social-links d-flex gap-2 mt-2">
                     <a href="https://vk.com/" target="_blank" rel="noopener" aria-label="ВКонтакте" class="social-link">
-                        <img src="/exam/assets/images/social.png" alt="ВКонтакте и Одноклассники" class="social-img">
+                        <img src="<?= e(url('assets/images/social.png')) ?>" alt="ВКонтакте и Одноклассники" class="social-img">
                     </a>
                 </div>
             </div>
@@ -37,6 +37,6 @@
     </div>
 </footer>
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
-<script src="/exam/assets/js/main.js"></script>
+<script src="<?= e(url('assets/js/main.js')) ?>"></script>
 </body>
 </html>

@@ -3,6 +3,19 @@ if (session_status() === PHP_SESSION_NONE) {
     session_start();
 }
 
+// ---------- Авто-определение базового URL ----------
+// Работает и при деплое в /exam/, и при запуске сервера из корня проекта.
+if (!defined('BASE_URL')) {
+    $sn = $_SERVER['SCRIPT_NAME'] ?? '/';
+    $sn = preg_replace('#/admin/[^/]+\.php$#', '', $sn);
+    $sn = preg_replace('#/[^/]+\.php$#', '', $sn);
+    define('BASE_URL', $sn === '/' ? '' : rtrim($sn, '/'));
+}
+
+function url(string $path = ''): string {
+    return BASE_URL . '/' . ltrim($path, '/');
+}
+
 function e(?string $s): string {
     return htmlspecialchars((string)$s, ENT_QUOTES | ENT_HTML5, 'UTF-8');
 }
@@ -21,14 +34,14 @@ function is_admin(): bool {
 
 function require_user(): void {
     if (!is_user()) {
-        header('Location: /exam/login.php');
+        header('Location: ' . url('login.php'));
         exit;
     }
 }
 
 function require_admin(): void {
     if (!is_admin()) {
-        header('Location: /exam/admin/login.php');
+        header('Location: ' . url('admin/login.php'));
         exit;
     }
 }

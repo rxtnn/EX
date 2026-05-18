@@ -50,7 +50,7 @@ include __DIR__ . '/includes/header.php';
                 </div>
             </div>
             <div class="col-auto">
-                <a href="/exam/apply.php" class="btn btn-light"><i class="bi bi-plus-circle"></i> Новая заявка</a>
+                <a href="<?= e(url('apply.php')) ?>" class="btn btn-light"><i class="bi bi-plus-circle"></i> Новая заявка</a>
             </div>
         </div>
     </div>
@@ -58,10 +58,10 @@ include __DIR__ . '/includes/header.php';
     <!-- Слайдер личного кабинета -->
     <section id="profileSlider" class="hero-slider fade-in-up mb-4">
         <div class="slides">
-            <div class="slide" style="background-image:url('/exam/assets/images/hero2.jpg')"><div class="caption"><h2 class="text-white">Добро пожаловать!</h2></div></div>
-            <div class="slide" style="background-image:url('/exam/assets/images/hero3.jpg')"><div class="caption"><h2 class="text-white">Следите за статусом заявок</h2></div></div>
-            <div class="slide" style="background-image:url('/exam/assets/images/hero1.jpg')"><div class="caption"><h2 class="text-white">Оставляйте отзывы после обучения</h2></div></div>
-            <div class="slide" style="background-image:url('/exam/assets/images/hero4.jpg')"><div class="caption"><h2 class="text-white">Записывайтесь онлайн</h2></div></div>
+            <div class="slide" style="background-image:url('<?= e(url('assets/images/hero2.jpg')) ?>')"><div class="caption"><h2 class="text-white">Добро пожаловать!</h2></div></div>
+            <div class="slide" style="background-image:url('<?= e(url('assets/images/hero3.jpg')) ?>')"><div class="caption"><h2 class="text-white">Следите за статусом заявок</h2></div></div>
+            <div class="slide" style="background-image:url('<?= e(url('assets/images/hero1.jpg')) ?>')"><div class="caption"><h2 class="text-white">Оставляйте отзывы после обучения</h2></div></div>
+            <div class="slide" style="background-image:url('<?= e(url('assets/images/hero4.jpg')) ?>')"><div class="caption"><h2 class="text-white">Записывайтесь онлайн</h2></div></div>
         </div>
         <button class="slider-btn prev" type="button"><i class="bi bi-chevron-left"></i></button>
         <button class="slider-btn next" type="button"><i class="bi bi-chevron-right"></i></button>
@@ -74,7 +74,7 @@ include __DIR__ . '/includes/header.php';
     <h2 class="mb-3"><i class="bi bi-list-check"></i> История заявок</h2>
 
     <?php if (!$apps): ?>
-        <div class="alert alert-info">У вас пока нет заявок. <a href="/exam/apply.php" class="alert-link">Подать заявку</a></div>
+        <div class="alert alert-info">У вас пока нет заявок. <a href="<?= e(url('apply.php')) ?>" class="alert-link">Подать заявку</a></div>
     <?php else: ?>
         <div class="row g-3">
             <?php foreach ($apps as $a):
@@ -119,7 +119,7 @@ include __DIR__ . '/includes/header.php';
                                 </div>
                             <?php elseif ($canReview): ?>
                                 <hr>
-                                <a href="/exam/review.php?app=<?= (int)$a['id'] ?>" class="btn btn-forest btn-sm">
+                                <a href="<?= e(url('review.php?app=' . (int)$a['id'])) ?>" class="btn btn-forest btn-sm">
                                     <i class="bi bi-chat-square-text"></i> Оставить отзыв
                                 </a>
                             <?php else: ?>

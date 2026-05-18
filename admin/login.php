@@ -2,7 +2,7 @@
 require_once __DIR__ . '/../includes/functions.php';
 require_once __DIR__ . '/../includes/db.php';
 
-if (is_admin()) { header('Location: /exam/admin/index.php'); exit; }
+if (is_admin()) { header('Location: ' . url('admin/index.php')); exit; }
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -27,7 +27,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     if ($ok) {
         $_SESSION['is_admin'] = true;
-        header('Location: /exam/admin/index.php'); exit;
+        header('Location: ' . url('admin/index.php')); exit;
     }
     $error = 'Неверный логин или пароль администратора.';
 }

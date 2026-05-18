@@ -2,7 +2,7 @@
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/db.php';
 
-if (is_user()) { header('Location: /exam/profile.php'); exit; }
+if (is_user()) { header('Location: ' . url('profile.php')); exit; }
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -17,7 +17,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if ($u && password_verify($password, $u['password'])) {
             $_SESSION['user_id'] = (int)$u['id'];
             $_SESSION['user_login'] = $u['login'];
-            header('Location: /exam/profile.php'); exit;
+            header('Location: ' . url('profile.php')); exit;
         } else {
             $error = 'Неверный логин или пароль.';
         }
@@ -52,7 +52,7 @@ include __DIR__ . '/includes/header.php';
                     </div>
                     <button class="btn btn-primary-deep w-100 mb-3"><i class="bi bi-box-arrow-in-right"></i> Войти</button>
                     <p class="text-center mb-0">
-                        Еще не зарегистрированы? <a href="/exam/register.php" class="text-primary-deep fw-medium">Регистрация</a>
+                        Еще не зарегистрированы? <a href="<?= e(url('register.php')) ?>" class="text-primary-deep fw-medium">Регистрация</a>
                     </p>
                 </form>
             </div>

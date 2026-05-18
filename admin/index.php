@@ -27,8 +27,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && ($_POST['action'] ?? '') === 'updat
         }
     }
 
-    $back = $_POST['redirect_to'] ?? '/exam/admin/index.php';
-    if (!preg_match('#^/exam/admin/#', $back)) $back = '/exam/admin/index.php';
+    $back = $_POST['redirect_to'] ?? url('admin/index.php');
+    $expected = url('admin/');
+    if (!str_starts_with($back, $expected)) $back = url('admin/index.php');
     header('Location: ' . $back);
     exit;
 }
@@ -100,7 +101,7 @@ function qs(array $over = []): string {
     $q = array_merge($_GET, $over);
     return '?' . http_build_query($q);
 }
-$currentUrl = '/exam/admin/index.php' . (empty($_GET) ? '' : '?' . http_build_query($_GET));
+$currentUrl = url('admin/index.php') . (empty($_GET) ? '' : '?' . http_build_query($_GET));
 
 $pageTitle = 'Панель администратора — Водить.РФ';
 include __DIR__ . '/../includes/header.php';
@@ -145,7 +146,7 @@ include __DIR__ . '/../includes/header.php';
             <span class="badge bg-light text-dark py-2 px-3">
                 <i class="bi bi-person-badge"></i> <?= e($_SESSION['admin_login'] ?? 'Admin26') ?>
             </span>
-            <a href="/exam/admin/logout.php" class="btn btn-outline-secondary btn-sm">
+            <a href="<?= e(url('admin/logout.php')) ?>" class="btn btn-outline-secondary btn-sm">
                 <i class="bi bi-box-arrow-right"></i> Выйти
             </a>
         </div>
@@ -226,7 +227,7 @@ include __DIR__ . '/../includes/header.php';
         </div>
         <?php if ($fStatus || $fTransport || $fSearch || $fDateFrom || $fDateTo): ?>
             <div class="mt-2">
-                <a class="btn btn-link btn-sm p-0 text-muted" href="/exam/admin/index.php">
+                <a class="btn btn-link btn-sm p-0 text-muted" href="<?= e(url('admin/index.php')) ?>">
                     <i class="bi bi-x-circle"></i> Сбросить все фильтры
                 </a>
                 <span class="text-muted small ms-2">Найдено: <?= (int)$total ?></span>

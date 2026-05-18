@@ -14,7 +14,7 @@ if ($app['status'] === 'Новая') { die('Отзыв можно оставит
 
 $check = $pdo->prepare('SELECT id FROM reviews WHERE application_id = ?');
 $check->execute([$appId]);
-if ($check->fetch()) { header('Location: /exam/profile.php'); exit; }
+if ($check->fetch()) { header('Location: ' . url('profile.php')); exit; }
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -26,7 +26,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo->prepare('INSERT INTO reviews (application_id, user_id, rating, text) VALUES (?,?,?,?)')
             ->execute([$appId, $uid, $rating, $text]);
         flash_set('ok', 'Спасибо за отзыв!');
-        header('Location: /exam/profile.php'); exit;
+        header('Location: ' . url('profile.php')); exit;
     }
 }
 

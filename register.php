@@ -2,7 +2,7 @@
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/db.php';
 
-if (is_user()) { header('Location: /exam/profile.php'); exit; }
+if (is_user()) { header('Location: ' . url('profile.php')); exit; }
 
 $errors = [];
 $old = ['login'=>'','fio'=>'','birthdate'=>'','phone'=>'','email'=>''];
@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $_SESSION['user_id'] = (int)$pdo->lastInsertId();
         $_SESSION['user_login'] = $login;
         flash_set('ok', 'Регистрация прошла успешно. Добро пожаловать!');
-        header('Location: /exam/profile.php'); exit;
+        header('Location: ' . url('profile.php')); exit;
     }
 }
 
@@ -92,7 +92,7 @@ include __DIR__ . '/includes/header.php';
 
                     <button class="btn btn-primary-deep w-100 mb-3"><i class="bi bi-check2-circle"></i> Зарегистрироваться</button>
                     <p class="text-center mb-0">
-                        Уже зарегистрированы? <a href="/exam/login.php" class="text-primary-deep fw-medium">Войти</a>
+                        Уже зарегистрированы? <a href="<?= e(url('login.php')) ?>" class="text-primary-deep fw-medium">Войти</a>
                     </p>
                 </form>
             </div>

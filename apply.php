@@ -18,7 +18,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $pdo->prepare('INSERT INTO applications (user_id, transport_type, start_date, payment_method) VALUES (?,?,?,?)')
             ->execute([current_user_id(), $tt, $date, $pm]);
         flash_set('ok', 'Заявка отправлена администратору на согласование.');
-        header('Location: /exam/profile.php'); exit;
+        header('Location: ' . url('profile.php')); exit;
     }
 }
 
