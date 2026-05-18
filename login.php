@@ -2,7 +2,8 @@
 require_once __DIR__ . '/includes/functions.php';
 require_once __DIR__ . '/includes/db.php';
 
-if (is_user()) { header('Location: ' . url('profile.php')); exit; }
+if (is_admin()) { header('Location: ' . url('admin/index.php')); exit; }
+if (is_user())  { header('Location: ' . url('profile.php'));     exit; }
 
 $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -11,11 +12,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     if ($login === '' || $password === '') {
         $error = 'Введите логин и пароль.';
     } else {
+        // Fallback на жёстко прописанные креды администратора из ТЗ (Admin26 / Demo20)
+        if ($login === 'Admin26' && $password === 'Demo20') {
+            $_SESSION['is_admin']    = true;
+            $_SESSION['admin_login'] = 'Admin26';
+            header('Location: ' . url('admin/index.php')); exit;
+        }
+
         $stmt = $pdo->prepare('SELECT * FROM users WHERE login = ?');
         $stmt->execute([$login]);
         $u = $stmt->fetch();
         if ($u && password_verify($password, $u['password'])) {
-            $_SESSION['user_id'] = (int)$u['id'];
+            // Если это администратор — открываем сессию админа и ведём в админ-панель
+            if (!empty($u['is_admin'])) {
+                $_SESSION['is_admin']    = true;
+                $_SESSION['admin_login'] = $u['login'];
+                header('Location: ' . url('admin/index.php')); exit;
+            }
+            $_SESSION['user_id']    = (int)$u['id'];
             $_SESSION['user_login'] = $u['login'];
             header('Location: ' . url('profile.php')); exit;
         } else {
