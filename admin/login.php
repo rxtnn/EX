@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/../includes/functions.php';
+require_once __DIR__ . '/../includes/db.php';
 
 if (is_admin()) { header('Location: /exam/admin/index.php'); exit; }
 
@@ -7,8 +8,12 @@ $error = '';
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $login = trim($_POST['login'] ?? '');
     $password = $_POST['password'] ?? '';
-    if ($login === 'Admin26' && $password === 'Demo20') {
+    $stmt = $pdo->prepare('SELECT * FROM users WHERE login = ? AND is_admin = 1');
+    $stmt->execute([$login]);
+    $u = $stmt->fetch();
+    if ($u && password_verify($password, $u['password'])) {
         $_SESSION['is_admin'] = true;
+        $_SESSION['admin_login'] = $u['login'];
         header('Location: /exam/admin/index.php'); exit;
     }
     $error = 'Неверный логин или пароль администратора.';

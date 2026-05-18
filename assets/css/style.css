@@ -31,6 +31,33 @@ h2, .h2 { font-size: 24px; font-weight: 500; }
 h3, .h3 { font-size: 18px; font-weight: 500; }
 .text-small, small { font-size: 12px; font-weight: 300; }
 
+/* ============ Логотип и соцсети ============ */
+.brand-logo {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    background: rgba(255,255,255,0.95);
+    border-radius: 8px;
+    padding: 4px;
+    transition: transform 0.3s ease;
+}
+.navbar-brand:hover .brand-logo { transform: rotate(-8deg) scale(1.05); }
+
+.social-links { flex-wrap: wrap; }
+.social-link {
+    display: inline-block;
+    transition: transform 0.2s ease, opacity 0.2s ease;
+    opacity: 0.9;
+}
+.social-link:hover { transform: translateY(-3px); opacity: 1; }
+.social-img {
+    height: 44px;
+    width: auto;
+    background: #fff;
+    border-radius: 8px;
+    padding: 4px 8px;
+}
+
 /* ============ Кастомные цвета ============ */
 .bg-primary-deep { background-color: var(--primary-deep) !important; }
 .bg-turquoise { background-color: var(--turquoise) !important; }
