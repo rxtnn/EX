@@ -1,0 +1,255 @@
+/* ============================================
+   Водить.РФ — стили (по руководству по стилю)
+   Палитра: #007BFF / #4CCFE0 / #FFFFFF / #28A745 / #6C757D
+   Шрифт: Rubik
+============================================ */
+
+:root {
+    --primary-deep: #007BFF;
+    --turquoise: #4CCFE0;
+    --light: #FFFFFF;
+    --forest-green: #28A745;
+    --metal-gray: #6C757D;
+    --ink: #1a2330;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+    font-family: 'Rubik', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-size: 16px;
+    color: var(--ink);
+    background: #f5f8fc;
+    min-height: 100%;
+}
+
+body { display: flex; flex-direction: column; min-height: 100vh; }
+main { flex: 1; }
+
+h1, .h1 { font-size: 36px; font-weight: 700; }
+h2, .h2 { font-size: 24px; font-weight: 500; }
+h3, .h3 { font-size: 18px; font-weight: 500; }
+.text-small, small { font-size: 12px; font-weight: 300; }
+
+/* ============ Кастомные цвета ============ */
+.bg-primary-deep { background-color: var(--primary-deep) !important; }
+.bg-turquoise { background-color: var(--turquoise) !important; }
+.bg-forest { background-color: var(--forest-green) !important; }
+.text-primary-deep { color: var(--primary-deep) !important; }
+.text-turquoise { color: var(--turquoise) !important; }
+
+.btn-primary-deep {
+    background-color: var(--primary-deep);
+    border-color: var(--primary-deep);
+    color: #fff;
+}
+.btn-primary-deep:hover {
+    background-color: #0062cc;
+    border-color: #0062cc;
+    color: #fff;
+}
+
+.btn-turquoise {
+    background-color: var(--turquoise);
+    border-color: var(--turquoise);
+    color: #fff;
+}
+.btn-turquoise:hover {
+    background-color: #2bbed1;
+    border-color: #2bbed1;
+    color: #fff;
+}
+
+.btn-forest {
+    background-color: var(--forest-green);
+    border-color: var(--forest-green);
+    color: #fff;
+}
+.btn-forest:hover { background-color: #208537; color: #fff; }
+
+/* ============ Hero / слайдер ============ */
+.hero-slider {
+    position: relative;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: 0 8px 24px rgba(0, 123, 255, 0.15);
+}
+.hero-slider .slides {
+    display: flex;
+    transition: transform 0.6s ease-in-out;
+}
+.hero-slider .slide {
+    flex: 0 0 100%;
+    height: 420px;
+    background-size: cover;
+    background-position: center;
+    position: relative;
+}
+.hero-slider .slide::after {
+    content: '';
+    position: absolute; inset: 0;
+    background: linear-gradient(180deg, rgba(0,0,0,0.15), rgba(0,123,255,0.45));
+}
+.hero-slider .caption {
+    position: absolute;
+    left: 5%; right: 5%; bottom: 20%;
+    z-index: 2;
+    color: #fff;
+    text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+}
+.hero-slider .caption h1 { font-size: 36px; }
+.hero-slider .slider-btn {
+    position: absolute;
+    top: 50%; transform: translateY(-50%);
+    z-index: 3;
+    background: rgba(255,255,255,0.85);
+    border: none;
+    width: 44px; height: 44px;
+    border-radius: 50%;
+    color: var(--primary-deep);
+    font-size: 20px;
+    cursor: pointer;
+    transition: all 0.25s;
+}
+.hero-slider .slider-btn:hover { background: #fff; transform: translateY(-50%) scale(1.1); }
+.hero-slider .slider-btn.prev { left: 16px; }
+.hero-slider .slider-btn.next { right: 16px; }
+.hero-slider .dots {
+    position: absolute;
+    bottom: 16px; left: 50%; transform: translateX(-50%);
+    display: flex; gap: 8px; z-index: 3;
+}
+.hero-slider .dot {
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.5);
+    border: none;
+    cursor: pointer;
+    transition: background 0.25s;
+}
+.hero-slider .dot.active { background: #fff; }
+
+@media (max-width: 576px) {
+    .hero-slider .slide { height: 280px; }
+    .hero-slider .caption h1 { font-size: 24px; }
+    .hero-slider .slider-btn { width: 36px; height: 36px; }
+}
+
+/* ============ Карточки транспорта ============ */
+.transport-card {
+    border: none;
+    border-radius: 12px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    height: 100%;
+}
+.transport-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 24px rgba(0, 123, 255, 0.18);
+}
+.transport-card img {
+    height: 200px;
+    object-fit: cover;
+    width: 100%;
+}
+
+/* ============ Карточки фич ============ */
+.feature-icon {
+    width: 56px; height: 56px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, var(--primary-deep), var(--turquoise));
+    color: #fff;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 26px;
+    margin-bottom: 12px;
+}
+
+/* ============ Формы ============ */
+.form-card {
+    background: #fff;
+    border-radius: 14px;
+    box-shadow: 0 8px 32px rgba(0, 123, 255, 0.08);
+    padding: 32px;
+}
+.form-card .form-control:focus, .form-card .form-select:focus {
+    border-color: var(--turquoise);
+    box-shadow: 0 0 0 0.2rem rgba(76, 207, 224, 0.25);
+}
+.field-hint {
+    font-size: 12px;
+    color: var(--metal-gray);
+    margin-top: 4px;
+}
+.field-error {
+    font-size: 12px;
+    color: #dc3545;
+    margin-top: 4px;
+    display: none;
+}
+.field-error.show { display: block; }
+.form-control.is-invalid, .form-select.is-invalid { border-color: #dc3545; }
+
+/* ============ Карточки заявок ============ */
+.app-card {
+    border: none;
+    border-left: 4px solid var(--primary-deep);
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+    transition: transform 0.2s, box-shadow 0.2s;
+}
+.app-card:hover { transform: translateX(4px); box-shadow: 0 4px 16px rgba(0,123,255,0.1); }
+.app-card.status-новая { border-left-color: var(--primary-deep); }
+.app-card.status-идет { border-left-color: #f0ad4e; }
+.app-card.status-завершено { border-left-color: var(--forest-green); }
+
+/* ============ Анимации ============ */
+@keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+.fade-in-up { animation: fadeInUp 0.5s ease-out both; }
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+.pulse { animation: pulse 2s ease-in-out infinite; }
+
+.btn { transition: all 0.2s ease-in-out; }
+.btn:hover { transform: translateY(-1px); }
+
+/* ============ Таблица админки ============ */
+.admin-table { background: #fff; border-radius: 10px; overflow: hidden; }
+.admin-table thead { background: var(--primary-deep); color: #fff; }
+.admin-table th { font-weight: 500; cursor: pointer; user-select: none; }
+.admin-table th.sortable:hover { background: rgba(255,255,255,0.1); }
+.admin-table th .sort-arrow { opacity: 0.5; font-size: 12px; }
+
+/* ============ Личный кабинет: профиль-карточка ============ */
+.profile-summary {
+    background: linear-gradient(135deg, var(--primary-deep), var(--turquoise));
+    color: #fff;
+    border-radius: 14px;
+    padding: 24px;
+}
+.profile-summary .avatar {
+    width: 72px; height: 72px;
+    border-radius: 50%;
+    background: rgba(255,255,255,0.2);
+    display: inline-flex; align-items: center; justify-content: center;
+    font-size: 32px;
+}
+
+/* ============ Звезды рейтинга ============ */
+.rating-stars { font-size: 20px; color: #f0ad4e; }
+.rating-input { font-size: 28px; cursor: pointer; }
+.rating-input .star { color: #ccc; transition: color 0.15s; }
+.rating-input .star.active, .rating-input .star:hover { color: #f0ad4e; }
+
+/* ============ Адаптив под 390x844 ============ */
+@media (max-width: 480px) {
+    .form-card { padding: 20px; }
+    h1, .h1 { font-size: 28px; }
+    .navbar-brand { font-size: 1rem; }
+}
